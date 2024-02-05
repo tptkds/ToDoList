@@ -1,10 +1,13 @@
 ;(function () {
   'use strict'
-
-  const $todos = document.querySelector('.todos');
+  const API_URI = "http://localhost:3000/todos";
   const get = (target) => {
     return document.querySelector(target)
   }
+
+  const $todos = get('.todos');
+  const $form = get('.todo_form');
+  const $todoInput = get('.todo_input');
 
   const createTodoElement = (item) => {
     const { id, content } = item
@@ -41,20 +44,47 @@
   }
   
   const renderTodos = (dataList) => {
+    $todos.innerHTML = "";
     dataList.forEach((todo) => {
       $todos.appendChild(createTodoElement(todo));
     });
   }
 
   const getTodos = () => {
-    fetch('http://localhost:3000/todos')
+    fetch(API_URI)
       .then((response) => response.json())
       .then((json) => renderTodos(json))
       .catch((error) => console.error(error));
   }
+
+  const addTodo = (e) => {
+    e.preventDefault();
+    const todo = {
+      content: $todoInput.value,
+      completed: false,
+    };
+    
+    fetch(API_URI, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todo),
+    })
+      .then(() => getTodos())
+      .then(() => {
+        $todoInput.value = "";
+        $todoInput.focus();
+      })
+      .catch((error) => console.error(error))
+  }
+
   const init = () => {
     window.addEventListener('DOMContentLoaded', () => {
       getTodos();
+      $form.addEventListener('submit', (e) => {
+        addTodo(e)
+      });
     })
   }
   init()
