@@ -1,6 +1,7 @@
 ;(function () {
   'use strict'
 
+  const $todos = document.querySelector('.todos');
   const get = (target) => {
     return document.querySelector(target)
   }
@@ -38,7 +39,23 @@
       `
     return $todoItem
   }
+  
+  const renderTodos = (dataList) => {
+    dataList.forEach((todo) => {
+      $todos.appendChild(createTodoElement(todo));
+    });
+  }
 
-  const init = () => {}
+  const getTodos = () => {
+    fetch('http://localhost:3000/todos')
+      .then((response) => response.json())
+      .then((json) => renderTodos(json))
+      .catch((error) => console.error(error));
+  }
+  const init = () => {
+    window.addEventListener('DOMContentLoaded', () => {
+      getTodos();
+    })
+  }
   init()
 })()
