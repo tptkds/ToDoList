@@ -82,8 +82,7 @@
   }
 
   const toggleTodo = (e) => {
-    const className = e.target.className;
-    if (className !== "todo_checkbox") return;
+    if (e.target.className !== "todo_checkbox") return;
     const $item = e.target.closest('.item');
     const id = $item.dataset.id;
     const completed = e.target.checked;
@@ -100,6 +99,64 @@
 
   }
 
+  const changeEditMode = (e) => {
+    if (e.target.className !== 'todo_edit_button') return;
+    const $item = e.target.closest('.item');
+    const $contentButtons = $item.querySelector('.content_buttons');
+    const $editButtons = $item.querySelector('.edit_buttons');
+    const $label = $item.querySelector('label');
+    const $input = $item.querySelector('input[type="text"]');
+    
+    $contentButtons.style.display = "none";
+    $label.style.display = "none";
+    $editButtons.style.display = "block";
+    $input.style.display = "block";
+    $input.focus();
+    $input.value = "";
+    $input.value = $label.innerHTML;
+  }
+
+  const updateTodo = (e) => {
+    if (e.target.className !== 'todo_edit_confirm_button') return;
+    const $item = e.target.closest('.item');
+    const $contentButtons = $item.querySelector('.content_buttons');
+    const $editButtons = $item.querySelector('.edit_buttons');
+    const $input = $item.querySelector('input[type="text"]');
+    const $label = $item.querySelector('label');
+    const id = $item.dataset.id;
+    if ($input.value === $label.innerHTML) return;
+    const content = $input.value;
+    fetch(`${API_URI}/${id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content })
+    })
+      .then(() => getTodos)
+      .catch((error) => console.error(error));
+    $contentButtons.style.display = "block";
+    $label.style.display = "block";
+    $editButtons.style.display = "none";
+    $input.style.display = "none";
+    $label.innerHTML = $input.value;
+  }
+
+  const cancelEditMode = (e) => {
+    if (e.target.className !== 'todo_edit_cancel_button') return;
+    const $item = e.target.closest('.item');
+    const $contentButtons = $item.querySelector('.content_buttons');
+    const $editButtons = $item.querySelector('.edit_buttons');
+    const $label = $item.querySelector('label');
+    const $input = $item.querySelector('input[type="text"]');
+
+    $contentButtons.style.display = "block";
+    $label.style.display = "block";
+    $editButtons.style.display = "none";
+    $input.style.display = "none";
+    $input.value = $label.innerHTML;
+  }
+
   const init = () => {
     window.addEventListener('DOMContentLoaded', () => {
       getTodos();
@@ -108,6 +165,15 @@
       });
       $todos.addEventListener('click', (e) => {
         toggleTodo(e);
+      });
+      $todos.addEventListener('click', (e) => {
+        changeEditMode(e);
+      });
+      $todos.addEventListener('click', (e) => {
+        updateTodo(e);
+      });
+      $todos.addEventListener('click', (e) => {
+        cancelEditMode(e);
       });
     })
   }
