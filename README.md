@@ -7,3 +7,7 @@
 <h2>데이터 추가하기</h2>
 <p>fetchAPI를 사용해 POST 요청으로 json 파일에 데이터 추가 구현</p>
 <img src="https://github.com/tptkds/ToDoList/assets/58039782/f61d4c91-f9c0-4769-a0c6-b154b494b5cf">
+
+<h2>할 일 완료 상태 변경하기</h2>
+<p>fetchAPI를 사용해 PATCH 요청으로 json 파일의 데이터 변경 구현</p>
+<img src="https://github.com/tptkds/ToDoList/assets/58039782/e0e192a4-cea2-4593-a4c1-2e670a0f287f">
