@@ -1,26 +1,6 @@
 {
   "todos": [
     {
-      "content": "테스트 1 수정본22334455",
-      "completed": true,
-      "id": "1"
-    },
-    {
-      "content": "테스트 2",
-      "completed": true,
-      "id": "2"
-    },
-    {
-      "content": "테스트 3",
-      "completed": false,
-      "id": "3"
-    },
-    {
-      "id": "7f62",
-      "content": "테스트 4",
-      "completed": false
-    },
-    {
       "id": "be1f",
       "content": "테스트 5",
       "completed": false

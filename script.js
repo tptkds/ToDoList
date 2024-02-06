@@ -73,7 +73,7 @@
       },
       body: JSON.stringify(todo),
     })
-      .then(() => getTodos())
+      .then(getTodos)
       .then(() => {
         $todoInput.value = "";
         $todoInput.focus();
@@ -94,7 +94,7 @@
       },
       body: JSON.stringify({ completed })
     })
-      .then(() => getTodos)
+      .then(getTodos)
       .catch((error) => console.error(error));
 
   }
@@ -133,7 +133,7 @@
       },
       body: JSON.stringify({ content })
     })
-      .then(() => getTodos)
+      .then(getTodos)
       .catch((error) => console.error(error));
     $contentButtons.style.display = "block";
     $label.style.display = "block";
@@ -157,6 +157,16 @@
     $input.value = $label.innerHTML;
   }
 
+  const deleteTodo = (e) => {
+    if (e.target.className !== "todo_remove_button") return;
+    const $item = e.target.closest('.item');
+    const id = $item.dataset.id;
+    fetch(`${API_URI}/${id}`, {
+      method: "DELETE"
+    })
+      .then(getTodos);
+  }
+
   const init = () => {
     window.addEventListener('DOMContentLoaded', () => {
       getTodos();
@@ -175,6 +185,9 @@
       $todos.addEventListener('click', (e) => {
         cancelEditMode(e);
       });
+      $todos.addEventListener('click', (e) => {
+        deleteTodo(e);
+      })
     })
   }
   init()
