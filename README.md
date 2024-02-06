@@ -6,4 +6,4 @@
 
 <h2>데이터 추가하기</h2>
 <p>fetchAPI를 사용해 POST 요청으로 json 파일에 데이터 추가 구현</p>
-<img src="https://github.com/tptkds/ToDoList/assets/58039782/40a65e96-1fc2-4eb8-8f87-1063cf8a35d2">
+<img src="https://github.com/tptkds/ToDoList/assets/58039782/f61d4c91-f9c0-4769-a0c6-b154b494b5cf">
