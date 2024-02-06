@@ -7,7 +7,7 @@
     },
     {
       "content": "테스트 2",
-      "completed": true,
+      "completed": false,
       "id": "2"
     },
     {
@@ -16,18 +16,13 @@
       "id": "3"
     },
     {
-      "id": "3693",
-      "content": "1",
+      "id": "7f62",
+      "content": "테스트 4",
       "completed": false
     },
     {
-      "id": "f0b1",
-      "content": "2",
-      "completed": false
-    },
-    {
-      "id": "b7f3",
-      "content": "3",
+      "id": "be1f",
+      "content": "테스트 5",
       "completed": false
     }
   ]
