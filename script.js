@@ -13,7 +13,7 @@
   const limit = 5;
   let currentPage = 1;
   const totalCount = 21;
-  const pageCount = 5;
+  const pageCount = 4;
 
   const pagination = () => {
     let totalPage = Math.ceil(totalCount / limit);
@@ -23,7 +23,6 @@
     let firstNumber = lastNumber - (pageCount - 1);
     const next = lastNumber + 1;
     const prev = firstNumber - 1;
-
     let html = '';
     if (prev > 0) {
       html += `<button class="prev" data-fn="prev">이전</button>`;
@@ -32,7 +31,7 @@
       html += `<button class="pageNumber" id="page_${i}">${i}</button>`;
     }
     if (lastNumber < totalPage) {
-      html += `<button class="next" data-fn="prev">다음</button>`;
+      html += `<button class="next" data-fn="next">다음</button>`;
     }
     $pagination.innerHTML = html;
     const $currentPageNumber = get(`.pageNumber#page_${currentPage}`);
@@ -100,7 +99,7 @@
   }
 
   const getTodos = () => {
-    fetch(`${API_URI}?_page=${currentPage }&_per_page=${limit}`)
+    fetch(`${API_URI}?_page=${currentPage}&_per_page=${limit}`)
       .then((response) => response.json())
       .then((json) => renderTodos(json.data))
       .catch((error) => console.error(error));
