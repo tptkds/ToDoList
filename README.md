@@ -19,3 +19,6 @@
 <h2>할 일 삭제하기</h2>
 <p>fetchAPI를 사용해 DELETE 요청으로 json 파일의 데이터 삭제 구현</p>
 <img src="https://github.com/tptkds/ToDoList/assets/58039782/7cb95eeb-8e62-4366-88a8-da6176075eb4">
+
+<h2>페이지네이션 구현</h2>
+<img src="https://github.com/tptkds/ToDoList/assets/58039782/ee0b342a-7d5f-487d-9c38-ca72ddf5e682">
