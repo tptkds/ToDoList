@@ -22,3 +22,6 @@
 
 <h2>페이지네이션 구현</h2>
 <img src="https://github.com/tptkds/ToDoList/assets/58039782/ee0b342a-7d5f-487d-9c38-ca72ddf5e682">
+
+<h2>중요 표시</h2>
+<img src="https://github.com/tptkds/ToDoList/assets/58039782/7e4f48fd-4671-4e18-a073-a6dccfe00e50">
