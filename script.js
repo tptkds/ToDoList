@@ -56,9 +56,10 @@
   }
 
   const createTodoElement = (item) => {
-    const { id, completed, content } = item
+    const { id, completed, content,  recommended} = item
     const $todoItem = document.createElement('div')
     const isChecked = completed ? 'checked' : "";
+    const isRecommended = recommended ? 'active' : '';
     $todoItem.classList.add('item')
     $todoItem.dataset.id = id
     $todoItem.innerHTML = `
@@ -68,10 +69,14 @@
                 class='todo_checkbox'
                 ${isChecked}
               />
-              <label>${content}</label>
+              <label class="title">${content}</label>
               <input type="text" value="${content}" />
             </div>
             <div class="item_buttons content_buttons">
+              <button class="todo_recommend_button ${isRecommended}">
+                <i class="far fa-star"></i>
+                <i class="fas fa-star"></i>
+              </button>
               <button class="todo_edit_button">
                 <i class="far fa-edit"></i>
               </button>
@@ -147,8 +152,24 @@
 
   }
 
+  const recommendTodo = (e) => {
+    if (!e.target.classList.contains('todo_recommend_button')) return;
+    const $item = e.target.closest('.item');
+    const id = $item.dataset.id;
+    const recommended = !e.target.classList.contains('active');
+    fetch(`${API_URI}/${id}`, {
+      method: "PATCH",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recommended })
+    })
+      .then((response) => response.json())
+      .then(getTodos)
+      .catch(error => console.error(error));
+  }
+
   const changeEditMode = (e) => {
-    if (e.target.className !== 'todo_edit_button') return;
+    console.log(e.target.className )
+    if (e.target.className !== 'todo_edit_button' && e.target.className !== 'title') return;
     const $item = e.target.closest('.item');
     const $contentButtons = $item.querySelector('.content_buttons');
     const $editButtons = $item.querySelector('.edit_buttons');
@@ -165,7 +186,7 @@
   }
 
   const updateTodo = (e) => {
-    if (e.target.className !== 'todo_edit_confirm_button') return;
+    if (e.target.className !== 'todo_edit_confirm_button' && e.keyCode !== 13) return;
     const $item = e.target.closest('.item');
     const $contentButtons = $item.querySelector('.content_buttons');
     const $editButtons = $item.querySelector('.edit_buttons');
@@ -191,7 +212,7 @@
   }
 
   const cancelEditMode = (e) => {
-    if (e.target.className !== 'todo_edit_cancel_button') return;
+    if (e.target.className !== 'todo_edit_cancel_button' && e.keyCode !== 27) return;
     const $item = e.target.closest('.item');
     const $contentButtons = $item.querySelector('.content_buttons');
     const $editButtons = $item.querySelector('.edit_buttons');
@@ -215,6 +236,7 @@
       .then(getTodos);
   }
 
+
   const init = () => {
     window.addEventListener('DOMContentLoaded', () => {
       getTodos();
@@ -229,15 +251,25 @@
     $todos.addEventListener('click', (e) => {
       changeEditMode(e);
     });
+    $todos.addEventListener('keydown', (e) => {
+      changeEditMode(e);
+    });
     $todos.addEventListener('click', (e) => {
+      updateTodo(e);
+    });
+    $todos.addEventListener('keydown', (e) => {
       updateTodo(e);
     });
     $todos.addEventListener('click', (e) => {
       cancelEditMode(e);
     });
+    $todos.addEventListener('keydown', (e) => {
+      cancelEditMode(e);
+    });
     $todos.addEventListener('click', (e) => {
       deleteTodo(e);
     })
+    $todos.addEventListener('click', recommendTodo);
   }
   init()
 })()
